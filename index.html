@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kinjangi Shanmukha Vardhan — Frontend Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="progress"></div>
+
+    <!-- NAV -->
+    <nav id="nav">
+      <div class="nav-logo">KSV.</div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#achievements">Achievements</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact" class="nav-cta">Hire Me</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+
+    <!-- SECTIONS CONTAINER -->
+    <div id="sections-container">
+      <!-- Sections will be dynamically loaded here -->
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-logo">KSV.</div>
+        <div class="footer-copy">
+          © 2026 Kinjangi Shanmukha Vardhan — Built with ❤️ + HTML/CSS/JS
+        </div>
+        <div class="footer-socials">
+          <a href="https://linkedin.com" class="social-link" title="LinkedIn"
+            >in</a
+          >
+          <a href="https://github.com" class="social-link" title="GitHub">GH</a>
+          <a href="https://leetcode.com" class="social-link" title="LeetCode"
+            >LC</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      // Load all sections
+      const sections = [
+        "hero",
+        "about",
+        "skills",
+        "projects",
+        "achievements",
+        "experience",
+        "education",
+        "contact",
+      ];
+      const container = document.getElementById("sections-container");
+
+      async function loadSections() {
+        for (const section of sections) {
+          try {
+            const response = await fetch(`sections/${section}.html`);
+            const html = await response.text();
+            container.innerHTML += html;
+          } catch (error) {
+            console.error(`Failed to load ${section} section:`, error);
+          }
+        }
+        // Reinitialize everything after sections are loaded
+        initReveal();
+      }
+
+      // Load sections when DOM is ready
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", loadSections);
+      } else {
+        loadSections();
+      }
+    </script>
+  </body>
+</html>

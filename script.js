@@ -109,6 +109,7 @@ let pi = 0,
   deleting = false;
 function typeLoop() {
   const el = document.getElementById("typed-text");
+  if (!el) return;
   const phrase = phrases[pi];
   if (!deleting) {
     el.textContent = phrase.substring(0, ++ci);
@@ -204,22 +205,26 @@ function handleSubmit(btn) {
   }, 4000);
 }
 
-// INIT
-window.addEventListener("scroll", updateProgress, { passive: true });
-window.addEventListener("load", () => {
+let pageInitialized = false;
+
+function initializePage() {
+  if (pageInitialized) return;
+  const skillsGrid = document.getElementById("skillsGrid");
+  const typedText = document.getElementById("typed-text");
+  if (!skillsGrid || !typedText) return;
   renderSkills();
   typeLoop();
   initReveal();
   animateCounters();
-  // hero reveals
   document.querySelectorAll(".hero-content .reveal").forEach((el, i) => {
     setTimeout(() => el.classList.add("visible"), i * 150 + 300);
   });
-  // avatar stats hover
-  document.querySelectorAll(".avatar-stat").forEach((el) => {
-    el.style.transition = "all 0.3s";
-  });
-});
+  pageInitialized = true;
+}
+
+// INIT
+window.addEventListener("scroll", updateProgress, { passive: true });
+window.addEventListener("load", initializePage);
 // close nav on link click
 document.querySelectorAll(".nav-links a").forEach((a) =>
   a.addEventListener("click", () => {

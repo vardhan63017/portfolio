@@ -81,8 +81,18 @@
             console.error(`Failed to load ${section} section:`, error);
           }
         }
-        // Reinitialize everything after sections are loaded
+        // Initialize page behavior after sections are loaded
+        initializePage();
+      }
+
+      function initializePage() {
+        renderSkills();
+        typeLoop();
         initReveal();
+        animateCounters();
+        document.querySelectorAll(".hero-content .reveal").forEach((el, i) => {
+          setTimeout(() => el.classList.add("visible"), i * 150 + 300);
+        });
       }
 
       // Load sections when DOM is ready
